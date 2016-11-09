@@ -1,0 +1,17 @@
+body{
+	align: center;
+}
+table {
+	border: 1px solid #000;
+	text-align: center;
+}
+th, td{
+	border: 1px solid #000;
+	text-align: center;
+	padding: 5px 15px;
+} 
+
+thead {
+	background: gray;
+	color: #fff;
+}

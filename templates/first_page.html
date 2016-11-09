@@ -1,0 +1,71 @@
+{% load static %}
+<html>
+<head>
+	<title>hw4</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'pages.css' %}">
+	<script src="{% static 'jquery-2.1.4.js' %}"></script>
+
+<script>
+ $(document).ready(function(){
+ 	$("#search_btn").click(function(){
+		$.ajax({
+		    url: "{% url 'ajax' %}",
+		    type: 'GET',
+		    data: {
+		      search_text: $('#search_text').val()
+		    },
+		    error: function(xhr) {
+	           alert(xhr.responseText);
+		    },
+		    success: function(response) {
+		 		$('#order-list').html(response);
+		    }
+		 });
+ 	});
+ });
+</script>
+
+</head>
+<body>
+	{% comment %}
+	<form action="" method="post" id="customerQuery">
+	{% csrf_token %}
+	<input type="text" name="search_text" id="search_text">
+	<input type="submit" id='search' value="search">
+	</form>
+	{% endcomment %}
+	<form>
+	<input type="text" name="search_text" id="search_text" placeholder="search">
+	<input type="button" id="search_btn" value="Search">
+	</form> 
+
+	<table cellspacing="0">
+		<thead>
+		    <tr>
+		    	<th colspan="2">Orders</th>
+		    </tr>
+		    <tr>
+		    	<td>ID</td>
+		    	<td>customer</td> 
+		    </tr>
+	  	</thead>
+	  	<tbody id="order-list">
+	  		<tr>
+				<td colspan="2">No Orders</td>
+			</tr>
+	  		{% comment %}
+	  		{% for order in order_list %}
+		  		<tr>
+					<td><a href="{% url 'get_order_detail' order_id=order.order_id %}">{{ order.order_id }}</a></td>
+					<td>{{ order.customer }}</td>
+				</tr>
+			{% empty %}
+				<tr>
+					<td colspan="2">No Orders</td>
+				</tr>
+	  		{% endfor %}
+	  		{% endcomment %}
+	  	</tbody>
+	</table>
+</body>
+</html>
